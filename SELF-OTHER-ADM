@@ -1,0 +1,472 @@
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local LocalPlayer = Players.LocalPlayer
+
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.ResetOnSpawn = false
+ScreenGui.DisplayOrder = 999999
+ScreenGui.IgnoreGuiInset = true
+
+local ToggleBtn = Instance.new("TextButton")
+ToggleBtn.Size = UDim2.new(0, 80, 0, 80)
+ToggleBtn.Position = UDim2.new(0.9, -40, 0.2, -40)
+ToggleBtn.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+ToggleBtn.Text = "ADM"
+ToggleBtn.Font = Enum.Font.GothamBold
+ToggleBtn.TextSize = 20
+ToggleBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleBtn.Parent = ScreenGui
+ToggleBtn.Draggable = true
+
+local BtnCorner = Instance.new("UICorner")
+BtnCorner.CornerRadius = UDim.new(1, 0)
+BtnCorner.Parent = ToggleBtn
+
+local BtnStroke = Instance.new("UIStroke")
+BtnStroke.Color = Color3.fromRGB(255, 255, 255)
+BtnStroke.Thickness = 2
+BtnStroke.Parent = ToggleBtn
+
+local MainFrame = Instance.new("Frame")
+MainFrame.Size = UDim2.new(0, 500, 0, 500)
+MainFrame.Position = UDim2.new(0.5, -250, 0.5, -250)
+MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
+MainFrame.BackgroundTransparency = 0.1
+MainFrame.BorderSizePixel = 2
+MainFrame.BorderColor3 = Color3.fromRGB(150, 150, 150)
+MainFrame.Visible = false
+MainFrame.Parent = ScreenGui
+MainFrame.Active = true
+MainFrame.Draggable = true
+
+local FrameCorner = Instance.new("UICorner")
+FrameCorner.CornerRadius = UDim.new(0, 10)
+FrameCorner.Parent = MainFrame
+
+local TitleBar = Instance.new("Frame")
+TitleBar.Size = UDim2.new(1, 0, 0, 40)
+TitleBar.Position = UDim2.new(0, 0, 0, 0)
+TitleBar.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+TitleBar.BorderSizePixel = 0
+TitleBar.Parent = MainFrame
+
+local TitleCorner = Instance.new("UICorner")
+TitleCorner.CornerRadius = UDim.new(0, 10)
+TitleCorner.Parent = TitleBar
+
+local TitleText = Instance.new("TextLabel")
+TitleText.Size = UDim2.new(1, -80, 1, 0)
+TitleText.Position = UDim2.new(0, 15, 0, 0)
+TitleText.BackgroundTransparency = 1
+TitleText.Text = "ADMIN PANEL"
+TitleText.Font = Enum.Font.GothamBold
+TitleText.TextSize = 16
+TitleText.TextColor3 = Color3.fromRGB(255, 255, 255)
+TitleText.TextXAlignment = Enum.TextXAlignment.Left
+TitleText.Parent = TitleBar
+
+local CloseBtn = Instance.new("TextButton")
+CloseBtn.Size = UDim2.new(0, 30, 0, 30)
+CloseBtn.Position = UDim2.new(1, -40, 0.5, -15)
+CloseBtn.BackgroundColor3 = Color3.fromRGB(200, 60, 60)
+CloseBtn.Text = "X"
+CloseBtn.Font = Enum.Font.GothamBold
+CloseBtn.TextSize = 16
+CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseBtn.Parent = TitleBar
+
+local CloseCorner = Instance.new("UICorner")
+CloseCorner.CornerRadius = UDim.new(0, 5)
+CloseCorner.Parent = CloseBtn
+
+local TabFrame = Instance.new("Frame")
+TabFrame.Size = UDim2.new(1, 0, 0, 40)
+TabFrame.Position = UDim2.new(0, 0, 0, 45)
+TabFrame.BackgroundTransparency = 1
+TabFrame.Parent = MainFrame
+
+local SelfTab = Instance.new("TextButton")
+SelfTab.Size = UDim2.new(0, 120, 0, 35)
+SelfTab.Position = UDim2.new(0.5, -130, 0, 0)
+SelfTab.BackgroundColor3 = Color3.fromRGB(80, 80, 100)
+SelfTab.Text = "SELF"
+SelfTab.Font = Enum.Font.GothamBold
+SelfTab.TextSize = 14
+SelfTab.TextColor3 = Color3.fromRGB(255, 255, 255)
+SelfTab.Parent = TabFrame
+
+local SelfCorner = Instance.new("UICorner")
+SelfCorner.CornerRadius = UDim.new(0, 5)
+SelfCorner.Parent = SelfTab
+
+local OtherTab = Instance.new("TextButton")
+OtherTab.Size = UDim2.new(0, 120, 0, 35)
+OtherTab.Position = UDim2.new(0.5, 10, 0, 0)
+OtherTab.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
+OtherTab.Text = "OTHERS"
+OtherTab.Font = Enum.Font.GothamBold
+OtherTab.TextSize = 14
+OtherTab.TextColor3 = Color3.fromRGB(255, 255, 255)
+OtherTab.Parent = TabFrame
+
+local OtherCorner = Instance.new("UICorner")
+OtherCorner.CornerRadius = UDim.new(0, 5)
+OtherCorner.Parent = OtherTab
+
+local SelfPanel = Instance.new("Frame")
+SelfPanel.Size = UDim2.new(1, -40, 1, -130)
+SelfPanel.Position = UDim2.new(0, 20, 0, 95)
+SelfPanel.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+SelfPanel.BackgroundTransparency = 0.3
+SelfPanel.BorderSizePixel = 1
+SelfPanel.BorderColor3 = Color3.fromRGB(100, 100, 100)
+SelfPanel.Visible = true
+SelfPanel.Parent = MainFrame
+
+local SelfPanelCorner = Instance.new("UICorner")
+SelfPanelCorner.CornerRadius = UDim.new(0, 8)
+SelfPanelCorner.Parent = SelfPanel
+
+local OtherPanel = Instance.new("Frame")
+OtherPanel.Size = UDim2.new(1, -40, 1, -130)
+OtherPanel.Position = UDim2.new(0, 20, 0, 95)
+OtherPanel.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+OtherPanel.BackgroundTransparency = 0.3
+OtherPanel.BorderSizePixel = 1
+OtherPanel.BorderColor3 = Color3.fromRGB(100, 100, 100)
+OtherPanel.Visible = false
+OtherPanel.Parent = MainFrame
+
+local OtherPanelCorner = Instance.new("UICorner")
+OtherPanelCorner.CornerRadius = UDim.new(0, 8)
+OtherPanelCorner.Parent = OtherPanel
+
+local Event = ReplicatedStorage:FindFirstChild("HDAdminHDClient")
+local Remote = nil
+if Event and Event:FindFirstChild("Signals") and Event.Signals:FindFirstChild("RequestCommandSilent") then
+    Remote = Event.Signals.RequestCommandSilent
+end
+
+local function sendCommand(cmd)
+    if Remote then
+        return Remote:InvokeServer(cmd)
+    end
+    return false
+end
+
+local function executeCmdBar2()
+    local Event = ReplicatedStorage:FindFirstChild("HDAdminHDClient")
+    if Event and Event:FindFirstChild("Signals") and Event.Signals:FindFirstChild("ExecuteClientCommand") then
+        local remote = Event.Signals.ExecuteClientCommand
+        firesignal(remote.OnClientEvent, 
+            {
+                game:GetService("Players").LocalPlayer,
+                {
+                    game:GetService("Players").LocalPlayer
+                },
+                "cmdbar2",
+                {
+                    FromClient = false,
+                    UnFunction = false
+                }
+            }
+        )
+        return true
+    end
+    return false
+end
+
+local selfCommands = {
+    ";ff", ";unff",
+    ";god", ";ungod",
+    ";fly", ";unfly",
+    ";tool", ";sword",
+    ";invisible", ";visible",
+    ";nightvision", ";unnightvision",
+    ";cmdbar2"
+}
+local selfBtnNames = {
+    "FF", "UNFF",
+    "GOD", "UNGOD",
+    "FLY", "UNFLY",
+    "TOOL", "SWD",
+    "INV", "VIS",
+    "NV", "UNNV",
+    "CMD2"
+}
+
+for i, cmd in ipairs(selfCommands) do
+    local row = math.floor((i-1) / 3)
+    local col = (i-1) % 3
+    local btn = Instance.new("TextButton")
+    btn.Size = UDim2.new(0, 100, 0, 35)
+    btn.Position = UDim2.new(0, 10 + (col * 105), 0, 10 + (row * 45))
+    btn.BackgroundColor3 = Color3.fromRGB(80, 80, 100)
+    btn.Text = selfBtnNames[i]
+    btn.Font = Enum.Font.GothamBold
+    btn.TextSize = 11
+    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    btn.Parent = SelfPanel
+    
+    local btnCorner = Instance.new("UICorner")
+    btnCorner.CornerRadius = UDim.new(0, 5)
+    btnCorner.Parent = btn
+    
+    if cmd == ";cmdbar2" then
+        btn.MouseButton1Click:Connect(function()
+            local success = executeCmdBar2()
+            if success then
+                btn.BackgroundColor3 = Color3.fromRGB(100, 200, 100)
+                task.wait(0.2)
+                btn.BackgroundColor3 = Color3.fromRGB(80, 80, 100)
+            else
+                btn.BackgroundColor3 = Color3.fromRGB(200, 80, 80)
+                task.wait(0.2)
+                btn.BackgroundColor3 = Color3.fromRGB(80, 80, 100)
+            end
+        end)
+    else
+        btn.MouseButton1Click:Connect(function()
+            local success = sendCommand(cmd)
+            if success then
+                btn.BackgroundColor3 = Color3.fromRGB(100, 200, 100)
+                task.wait(0.2)
+                btn.BackgroundColor3 = Color3.fromRGB(80, 80, 100)
+            else
+                btn.BackgroundColor3 = Color3.fromRGB(200, 80, 80)
+                task.wait(0.2)
+                btn.BackgroundColor3 = Color3.fromRGB(80, 80, 100)
+            end
+        end)
+    end
+end
+
+local otherSearchBox = Instance.new("TextBox")
+otherSearchBox.Size = UDim2.new(1, -20, 0, 30)
+otherSearchBox.Position = UDim2.new(0, 10, 0, 10)
+otherSearchBox.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
+otherSearchBox.BackgroundTransparency = 0.2
+otherSearchBox.BorderSizePixel = 1
+otherSearchBox.BorderColor3 = Color3.fromRGB(100, 100, 100)
+otherSearchBox.Text = ""
+otherSearchBox.PlaceholderText = "CARI PLAYER..."
+otherSearchBox.Font = Enum.Font.Gotham
+otherSearchBox.TextSize = 11
+otherSearchBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+otherSearchBox.PlaceholderColor3 = Color3.fromRGB(150, 150, 150)
+otherSearchBox.ClearTextOnFocus = false
+otherSearchBox.Parent = OtherPanel
+
+local otherSearchCorner = Instance.new("UICorner")
+otherSearchCorner.CornerRadius = UDim.new(0, 6)
+otherSearchCorner.Parent = otherSearchBox
+
+local otherPlayerList = Instance.new("ScrollingFrame")
+otherPlayerList.Size = UDim2.new(1, -20, 1, -60)
+otherPlayerList.Position = UDim2.new(0, 10, 0, 50)
+otherPlayerList.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+otherPlayerList.BackgroundTransparency = 0.3
+otherPlayerList.BorderSizePixel = 1
+otherPlayerList.BorderColor3 = Color3.fromRGB(100, 100, 100)
+otherPlayerList.ScrollBarThickness = 8
+otherPlayerList.CanvasSize = UDim2.new(0, 0, 2, 0)
+otherPlayerList.AutomaticCanvasSize = Enum.AutomaticSize.Y
+otherPlayerList.Parent = OtherPanel
+
+local otherListCorner = Instance.new("UICorner")
+otherListCorner.CornerRadius = UDim.new(0, 8)
+otherListCorner.Parent = otherPlayerList
+
+local otherTotalLabel = Instance.new("TextLabel")
+otherTotalLabel.Size = UDim2.new(1, -20, 0, 25)
+otherTotalLabel.Position = UDim2.new(0, 10, 1, -35)
+otherTotalLabel.BackgroundTransparency = 1
+otherTotalLabel.Text = "TOTAL: 0"
+otherTotalLabel.Font = Enum.Font.Gotham
+otherTotalLabel.TextSize = 11
+otherTotalLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+otherTotalLabel.Parent = OtherPanel
+
+local otherFilter = ""
+local otherEntries = {}
+
+local function executeOtherCommand(player, cmd)
+    if not player then return false end
+    local username = player.Name
+    local Result = sendCommand(";" .. cmd .. " " .. username)
+    return Result == true
+end
+
+local function createOtherEntry(player, yPos)
+    local entryFrame = Instance.new("Frame")
+    entryFrame.Size = UDim2.new(1, -10, 0, 45)
+    entryFrame.Position = UDim2.new(0, 5, 0, yPos)
+    entryFrame.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
+    entryFrame.BackgroundTransparency = 0.2
+    entryFrame.BorderSizePixel = 1
+    entryFrame.BorderColor3 = Color3.fromRGB(80, 80, 80)
+    entryFrame.Parent = otherPlayerList
+    
+    local entryCorner = Instance.new("UICorner")
+    entryCorner.CornerRadius = UDim.new(0, 6)
+    entryCorner.Parent = entryFrame
+    
+    local nameLabel = Instance.new("TextLabel")
+    nameLabel.Size = UDim2.new(0, 130, 0, 20)
+    nameLabel.Position = UDim2.new(0, 8, 0, 5)
+    nameLabel.BackgroundTransparency = 1
+    nameLabel.Text = player.DisplayName
+    nameLabel.Font = Enum.Font.GothamBold
+    nameLabel.TextSize = 11
+    nameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    nameLabel.TextXAlignment = Enum.TextXAlignment.Left
+    nameLabel.Parent = entryFrame
+    
+    local userLabel = Instance.new("TextLabel")
+    userLabel.Size = UDim2.new(0, 130, 0, 15)
+    userLabel.Position = UDim2.new(0, 8, 0, 25)
+    userLabel.BackgroundTransparency = 1
+    userLabel.Text = player.Name
+    userLabel.Font = Enum.Font.Gotham
+    userLabel.TextSize = 9
+    userLabel.TextColor3 = Color3.fromRGB(180, 180, 180)
+    userLabel.TextXAlignment = Enum.TextXAlignment.Left
+    userLabel.Parent = entryFrame
+    
+    local buttonFrame = Instance.new("Frame")
+    buttonFrame.Size = UDim2.new(0, 240, 0, 35)
+    buttonFrame.Position = UDim2.new(1, -250, 0.5, -17.5)
+    buttonFrame.BackgroundTransparency = 1
+    buttonFrame.Parent = entryFrame
+    
+    local otherCommands = {"view", "unview", "explode", "bring", "to"}
+    local otherBtnNames = {"VIEW", "UNV", "EXP", "BRG", "TO"}
+    
+    for i, cmd in ipairs(otherCommands) do
+        local btn = Instance.new("TextButton")
+        btn.Size = UDim2.new(0, 42, 0, 32)
+        btn.Position = UDim2.new((i-1) * 0.19, 0, 0, 0)
+        btn.BackgroundColor3 = Color3.fromRGB(80, 80, 100)
+        btn.Text = otherBtnNames[i]
+        btn.Font = Enum.Font.GothamBold
+        btn.TextSize = 9
+        btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+        btn.Parent = buttonFrame
+        
+        local btnCorner = Instance.new("UICorner")
+        btnCorner.CornerRadius = UDim.new(0, 5)
+        btnCorner.Parent = btn
+        
+        btn.MouseButton1Click:Connect(function()
+            local success = executeOtherCommand(player, cmd)
+            if success then
+                btn.BackgroundColor3 = Color3.fromRGB(100, 200, 100)
+                task.wait(0.15)
+                btn.BackgroundColor3 = Color3.fromRGB(80, 80, 100)
+            else
+                btn.BackgroundColor3 = Color3.fromRGB(200, 80, 80)
+                task.wait(0.15)
+                btn.BackgroundColor3 = Color3.fromRGB(80, 80, 100)
+            end
+        end)
+    end
+    
+    return entryFrame
+end
+
+local function updateOtherList(filter)
+    for _, entry in pairs(otherEntries) do
+        if entry then
+            entry:Destroy()
+        end
+    end
+    otherEntries = {}
+    
+    local players = Players:GetPlayers()
+    local filtered = {}
+    
+    for _, player in ipairs(players) do
+        if player ~= LocalPlayer then
+            if filter == "" or player.DisplayName:lower():find(filter) or player.Name:lower():find(filter) then
+                table.insert(filtered, player)
+            end
+        end
+    end
+    
+    table.sort(filtered, function(a, b)
+        return a.DisplayName < b.DisplayName
+    end)
+    
+    otherTotalLabel.Text = "TOTAL: " .. #filtered .. " / " .. (#players - 1)
+    
+    local yPos = 0
+    for _, player in ipairs(filtered) do
+        local entry = createOtherEntry(player, yPos)
+        table.insert(otherEntries, entry)
+        yPos = yPos + 55
+    end
+    
+    otherPlayerList.CanvasSize = UDim2.new(0, 0, 0, yPos + 10)
+end
+
+otherSearchBox:GetPropertyChangedSignal("Text"):Connect(function()
+    otherFilter = otherSearchBox.Text:lower()
+    updateOtherList(otherFilter)
+end)
+
+SelfTab.MouseButton1Click:Connect(function()
+    SelfPanel.Visible = true
+    OtherPanel.Visible = false
+    SelfTab.BackgroundColor3 = Color3.fromRGB(80, 80, 100)
+    OtherTab.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
+end)
+
+OtherTab.MouseButton1Click:Connect(function()
+    SelfPanel.Visible = false
+    OtherPanel.Visible = true
+    SelfTab.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
+    OtherTab.BackgroundColor3 = Color3.fromRGB(80, 80, 100)
+    updateOtherList(otherFilter)
+end)
+
+local isOpen = false
+
+ToggleBtn.MouseButton1Click:Connect(function()
+    isOpen = not isOpen
+    MainFrame.Visible = isOpen
+    if isOpen then
+        ToggleBtn.BackgroundColor3 = Color3.fromRGB(80, 180, 80)
+        if OtherPanel.Visible then
+            updateOtherList(otherFilter)
+        end
+    else
+        ToggleBtn.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+    end
+end)
+
+CloseBtn.MouseButton1Click:Connect(function()
+    isOpen = false
+    MainFrame.Visible = false
+    ToggleBtn.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+end)
+
+UserInputService.TouchTap:Connect(function(touchPos, gameProcessed)
+    if not gameProcessed and not isOpen then
+        local btnPos = ToggleBtn.AbsolutePosition
+        local btnSize = ToggleBtn.AbsoluteSize
+        local touchInBtn = (touchPos.X >= btnPos.X and touchPos.X <= btnPos.X + btnSize.X and
+                           touchPos.Y >= btnPos.Y and touchPos.Y <= btnPos.Y + btnSize.Y)
+        if touchInBtn then
+            isOpen = true
+            MainFrame.Visible = true
+            ToggleBtn.BackgroundColor3 = Color3.fromRGB(80, 180, 80)
+            if OtherPanel.Visible then
+                updateOtherList(otherFilter)
+            end
+        end
+    end
+end)
+
+updateOtherList("")
